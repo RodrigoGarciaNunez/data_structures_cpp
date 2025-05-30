@@ -41,8 +41,14 @@ void search_binary_tree::add_node(int i){   //guacala
     
 }
 
-void search_binary_tree::add_node_recursive(int i){
-    tree_node * aux  = new tree_node(i);
+
+void search_binary_tree::add_node_recursive(tree_node *& root, tree_node * aux, int i){
+    if(aux == nullptr) aux  = new tree_node(i);
+    
+    if(this->root == nullptr) {
+        this->root = aux;
+        return;
+    }
     if(root == nullptr){
         root = aux;
         return;
@@ -50,29 +56,12 @@ void search_binary_tree::add_node_recursive(int i){
 
     if(aux->val <= root->val) add_node_recursive(root->left_child, aux);
     else add_node_recursive(root->right_child, aux);
-}
-
-void search_binary_tree::add_node_recursive(tree_node *& child, tree_node *& aux){
-    if(child == nullptr){
-        child = aux;
-        return;
-    }
-
-    if(aux->val <= child->val) add_node_recursive(child->left_child, aux);
-    else add_node_recursive(child->right_child, aux);
 
 }
 
-void search_binary_tree::print_preorden(){
-    if(root == nullptr) return;
 
-    cerr << root->val;
-    print_preorden(root->left_child);
-    print_preorden(root->right_child);
-}
-
-void search_binary_tree::print_preorden(tree_node *& aux){
-    if(aux == nullptr) return;
+void search_binary_tree::print_preorden(tree_node * aux){
+    if(aux == nullptr) return; 
 
     cerr << " "<<aux->val;
     print_preorden(aux->left_child);
@@ -82,19 +71,30 @@ void search_binary_tree::print_preorden(tree_node *& aux){
 
 
 void search_binary_tree::delete_node(int i){
+    tree_node *& del = search_node(i, root);
+    tree_node * left_child;
+    tree_node * right_child;
+    if(del != nullptr){
+        left_child = del->left_child;
+        right_child = del->right_child;
+        del = nullptr;
 
+        if(left_child != nullptr) add_node_recursive(root, left_child);
+        if(right_child != nullptr) add_node_recursive(root, right_child);
+        
+    }   
 }
 
 
-bool search_binary_tree::search_node(int i, tree_node *& root){
+tree_node *& search_binary_tree::search_node(int i, tree_node *& root){
     if(root != nullptr){
-        if(root->val == i) return true;
+        if(root->val == i) return root;
 
         if( i <= root->val) search_node(i, root->left_child);
         else search_node(i, root->right_child);
 
     }
-    else return false;   
+    else return root;   
 }
 
     

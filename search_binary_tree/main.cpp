@@ -16,14 +16,24 @@ int main(int argc, char * argv[]){
     for(int i =0; i < 15; i++){
         random_number = dis(gen);
         tree->add_node(random_number);
-        tree1->add_node_recursive(random_number);
+        tree1->add_node_recursive(tree1->root,nullptr,random_number);
     }
 
-    tree->print_preorden();
+    tree->print_preorden(tree->root);
     cerr << endl;
-    tree1->print_preorden();
+    tree1->print_preorden(tree1->root);
 
     int to_search;
     cin >> to_search;
-    cerr << tree1->search_node(to_search, tree1->root) << endl;
+    tree_node *& search = tree1->search_node(to_search, tree1->root);
+    cerr << search->val << endl;
+
+    //search =nullptr;
+
+    //tree1->print_preorden(tree1->root);
+
+    cin >> to_search;
+    tree1->delete_node(to_search);
+
+    tree1->print_preorden(tree1->root);
 }
