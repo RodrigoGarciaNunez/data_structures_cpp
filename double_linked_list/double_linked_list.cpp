@@ -1,17 +1,17 @@
 #include "double_linked_list.h"
 
 
-linked_list::linked_list(){
-    raiz = NULL;
-    bottom = NULL;
+d_linked_list::d_linked_list(): data_structure(){
+    root = nullptr;
+    bottom = nullptr;
     size =0;
 }
 
-void linked_list::add_node(int i){
+void d_linked_list::append(int i){
     node_list * newNode = new node_list(i);
     size++;
-    if (raiz == NULL){
-        raiz = newNode;
+    if (root == nullptr){
+        root = newNode;
         bottom = newNode;
         return;
     }
@@ -20,98 +20,100 @@ void linked_list::add_node(int i){
     aux = bottom;
     newNode->prev = bottom;
     bottom = newNode;
-    aux->next = newNode;
+    aux->next_right = newNode;
 
     
 }
 
-void linked_list::delete_node(int to_delete){
-    node_list *  node =  find_node(to_delete);
-    if (node == NULL){
+void d_linked_list::delete_node(int to_delete){
+    node_list * node = find(to_delete);
+    //node = static_cast<node_list*>(node);
+
+    if (node == nullptr){
         cerr << "NO está el nodo al eliminar" << endl;
         return;
     }
     node_list * izquerda = node->prev;
-    node_list * derecha = node->next;
+    node_list * derecha = node->next_right;
 
     derecha->prev = izquerda;
-    izquerda->next = derecha;
+    izquerda->next_right = derecha;
 
-    node->next = NULL;
-    node->prev = NULL;
+    node->next_right = nullptr;
+    node->prev = nullptr;
 
     free(node);
     cerr << "Nodo borrado" << endl;
 }
 
-node_list * linked_list::find_node(int looking){
-    node_list * left_aux = raiz->next;
+node_list * d_linked_list::find(int looking){
+    node_list * left_aux = root->next_right;
     node_list * right_aux = bottom->prev;
-    node_list * found =NULL;
+    node_list * found =nullptr;
     int izquierda, derecha;
-    if (raiz->value == looking || bottom->value == looking){
+    if (root->id == looking || bottom->id == looking){
 
-            found = (raiz->value == looking) ? found=raiz : found = bottom;
-            izquierda = (found->prev != NULL) ? found->prev->value : -1;
-            derecha = (found->next != NULL) ? found->next->value : -1;
+            found = (root->id == looking) ? found=root : found = bottom;
+            izquierda = (found->prev != nullptr) ? found->prev->id : -1;
+            derecha = (found->next_right != nullptr) ? found->next_right->id : -1;
 
-            cerr << "Valor: "<< found->value << " Siguiente: "<< derecha <<"Izquierda: " << izquierda << endl;
+            cerr << "Valor: "<< found->id << " Siguiente: "<< derecha <<"Izquierda: " << izquierda << endl;
             return found;
         }
 
     while (left_aux != right_aux){
-        if (left_aux->value == looking || right_aux->value == looking){
-            found = (left_aux->value == looking) ? found=left_aux : found = right_aux;
+        if (left_aux->id == looking || right_aux->id == looking){
+            found = (left_aux->id == looking) ? found=left_aux : found = right_aux;
 
-            izquierda = (found->prev != NULL) ? found->prev->value : -1;
-            derecha = (found->next != NULL) ? found ->next->value : -1;
+            izquierda = (found->prev != nullptr) ? found->prev->id : -1;
+            derecha = (found->next_right != nullptr) ? found ->next_right->id : -1;
 
-            cerr << "Valor: "<< found->value << " Siguiente: "<< derecha <<"Izquierda: " << izquierda << endl;
+            cerr << "Valor: "<< found->id << " Siguiente: "<< derecha <<"Izquierda: " << izquierda << endl;
             return found;
         }
 
-        left_aux = left_aux->next;
+        left_aux = left_aux->next_right;
         right_aux = right_aux->prev;
     }
     
-    return NULL;
+    return nullptr;
 }
 
-void linked_list::reverse(){
-    node_list *current = raiz;
+void d_linked_list::reverse(){
+    node_list *current = root;
     node_list *aux = current;
-    raiz = bottom;
+    root = bottom;
     bottom = aux;
-    aux = current->next;
+    aux = current->next_right;
 
     int left_counter =0;
     int izq, der;
-    while(current != NULL){
-        aux = current->next;
-        current->next = current->prev;
+    while(current != nullptr){
+        aux = current->next_right;
+        current->next_right = current->prev;
         current->prev = aux;
-        izq = (current->prev != NULL)? current->prev->value : -1;
-        der =  (current->next != NULL)? current->next->value: -1;
+        izq = (current->prev != nullptr)? current->prev->id : -1;
+        der =  (current->next_right != nullptr)? current->next_right->id: -1;
 
         current = current->prev;
     }
     
-    print_list();
+    print();
 }
 
 
-void linked_list::print_list(){
-    node_list * aux = raiz;
-    while (aux != NULL){
-        cout << "current:" << aux->value;
-        if(aux->next!= NULL) cout <<  " next:" << aux->next->value;
-        else cout <<" next: NULL";
+void d_linked_list::print(){
+    node_list * aux = root;
+    while (aux != nullptr){
+        cout << "current:" << aux->id;
+        if(aux->next_right!= nullptr) cout <<  " next_right:" << aux->next_right->id;
+        else cout <<" next_right: nullptr";
         
-        if(aux->prev !=NULL) cout <<  " prev:" << aux->prev->value;
-        else cout << " prev: NULL";
+        if(aux->prev !=nullptr) cout <<  " prev:" << aux->prev->id;
+        else cout << " prev: nullptr";
 
         cout << endl;
-        aux = aux->next;
+        aux = aux->next_right;
     }
     cout << "\n\n"  << endl;
 }

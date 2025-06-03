@@ -2,7 +2,6 @@
 #include <random>
 #include "search_binary_tree.h"
 
-
 int main(int argc, char * argv[]){
 
     search_binary_tree * tree = new search_binary_tree();
@@ -19,14 +18,14 @@ int main(int argc, char * argv[]){
         tree1->add_node_recursive(tree1->root,nullptr,random_number);
     }
 
-    tree->print_preorden(tree->root);
+    tree->print(tree->root);
     cerr << endl;
-    tree1->print_preorden(tree1->root);
+    tree1->print(tree1->root);
 
     int to_search;
     cin >> to_search;
     tree_node *& search = tree1->search_node(to_search, tree1->root);
-    cerr << search->val << endl;
+    cerr << search->id << endl;
 
     //search =nullptr;
 
@@ -35,5 +34,5 @@ int main(int argc, char * argv[]){
     cin >> to_search;
     tree1->delete_node(to_search);
 
-    tree1->print_preorden(tree1->root);
+    tree1->print(tree1->root);
 }

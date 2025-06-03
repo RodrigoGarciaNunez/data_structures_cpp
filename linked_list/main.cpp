@@ -8,18 +8,18 @@ int main(int argc, char * argv[]){
         ll->append(i);
     }
 
-    ll->print_list();
+    ll->print();
     cout << "print listo" << endl;
     ll->reverse();
     cout << "reverse listo" << endl;
-    ll->print_list();
+    ll->print();
 
-    node_list * found = ll->find_node(11);
+    node_list * found = ll->find(11);
     if (found == nullptr)  cerr << "Nodo no encontrado" << endl;
     else cerr << "Nodo encontrado" << endl;
 
     ll->delete_node(8);
 
-    ll->print_list();
+    ll->print();
         
 }

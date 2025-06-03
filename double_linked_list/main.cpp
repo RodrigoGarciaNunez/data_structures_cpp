@@ -4,21 +4,21 @@
 using namespace std;
 
 int main(int argc, char* argv[]){
-    linked_list * ll = new linked_list();
+    d_linked_list * ll = new d_linked_list();
     for(int i=0; i < 10; i++){
-        ll->add_node(i);
+        ll->append(i);
     }
 
-    ll->print_list();
+    ll->print();
     cout << "print listo" << endl;
     ll->reverse();
 
-    node_list * found = ll->find_node(5);
+    node_list * found = ll->find(5);
     if (found == NULL)  cerr << "Nodo no encontrado" << endl;
     else cerr << "Nodo encontrado" << endl;
 
     ll->delete_node(8);
 
-    ll->print_list();
+    ll->print();
         
 }

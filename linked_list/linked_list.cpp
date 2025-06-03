@@ -1,6 +1,6 @@
 #include "linked_list.h"
 
-linked_list::linked_list(){
+linked_list::linked_list(): data_structure(){
     root = nullptr;
 }
 
@@ -13,37 +13,37 @@ void linked_list::append(int i){
 
     node_list * aux = root;
     while(aux != nullptr){
-        if (aux->next == nullptr){
-            aux->next = new_node;
+        if (aux->next_right == nullptr){
+            aux->next_right = new_node;
             return;
         } 
             
-        aux = aux->next;
+        aux = aux->next_right;
     }
 }
 
 void linked_list::delete_node(int i){
     node_list * aux = root;
-    node_list * aux1 = aux->next;
+    node_list * aux1 = aux->next_right;
     while(aux1 != nullptr){
-        if(aux1->val == i) break;
-        aux = aux->next;
-        aux1 = aux1->next;
+        if(aux1->id == i) break;
+        aux = aux->next_right;
+        aux1 = aux1->next_right;
     }
 
-    aux->next = aux1->next;
+    aux->next_right = aux1->next_right;
     aux1 = nullptr;
 
 }
 
-node_list * linked_list::find_node(int i){
-    if(root->val == i) return root;
+node_list * linked_list::find(int i){
+    if(root->id == i) return root;
     
-    node_list * aux =  root->next;
+    node_list * aux =  root->next_right;
     while(aux!= nullptr){
-        if(aux->val == i) return aux;
+        if(aux->id == i) return aux;
 
-        aux = aux->next;
+        aux = aux->next_right;
     }
     return nullptr;
 }
@@ -52,13 +52,13 @@ void linked_list::reverse(){
     if(root == nullptr) return;
     
     node_list * aux0 = root;
-    node_list * aux1 = aux0->next;
+    node_list * aux1 = aux0->next_right;
     node_list * temp = nullptr;
-    aux0->next = nullptr;
+    aux0->next_right = nullptr;
 
     while(aux0 != nullptr){
-        temp = aux1->next;
-        aux1->next = aux0;
+        temp = aux1->next_right;
+        aux1->next_right = aux0;
 
         aux0 = aux1;
         aux1 = temp;
@@ -71,10 +71,10 @@ void linked_list::reverse(){
 }
 
 
-void linked_list::print_list(){
+void linked_list::print(){
     node_list *  aux = root;
     while(aux != nullptr){
-        cerr << aux->val <<endl;
-        aux = aux->next;
+        cerr << aux->id <<endl;
+        aux = aux->next_right;
     }
 }
